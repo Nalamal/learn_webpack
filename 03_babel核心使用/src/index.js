@@ -1,5 +1,9 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+// import "core-js/stable";
+// import "regenerator-runtime/runtime";
+import React from "react";
+import ReactDom from "react-dom/client";
+import App from "./react/App.jsx";
+import { sum } from "./ts/math";
 
 // 1.ES6中const定义常量
 const message = "Hello Babel";
@@ -20,3 +24,10 @@ console.log(name, age);
 const nickname = "coderwhy";
 // String.prototype.includes => String相关的polyfill就会被打包
 console.log(nickname.includes("coder"));
+
+// 5.编写react代码
+const root = ReactDom.createRoot(document.querySelector("#root"));
+root.render(<App />);
+
+// 6. 使用typescript代码
+console.log(sum(20, 30));
