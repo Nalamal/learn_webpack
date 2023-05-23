@@ -2,6 +2,7 @@
 // import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDom from "react-dom/client";
+import axios from "axios";
 import App from "./react/App.jsx";
 import { sum } from "./ts/math";
 
@@ -34,3 +35,8 @@ console.log(sum(20, 30));
 
 // 7. 新编写的代码逻辑
 console.log("哈哈哈哈哈");
+
+// 8. 发送网络请求获取数据
+axios.get("/api/users/list").then((res) => {
+  console.log(res.data);
+});
