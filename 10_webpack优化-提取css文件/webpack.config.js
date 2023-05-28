@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { ProvidePlugin } = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "production",
@@ -13,9 +15,9 @@ module.exports = {
     // 打包出口路径
     path: path.resolve(__dirname, "./build"),
     // 打包文件的名字
-    filename: "[name]_bundle.js",
+    filename: "js/[name]_bundle.js",
     // 单独针对分包的文件进行命名
-    chunkFilename: "[name]_chunk.js",
+    chunkFilename: "js/[name]_chunk.js",
     // 打包之后的资源放在CDN服务器上
     // publicPath: "http://coderwhycdn.com/",
   },
@@ -71,17 +73,16 @@ module.exports = {
           // window 上面 /\
           // mac 上面 /
           test: /node_modules/,
-          filename: "[id]_vendors.js",
+          filename: "js/[id]_vendors.js",
         },
         utils: {
           test: /utils/,
-          filename: "[id]_utils.js",
+          filename: "js/[id]_utils.js",
         },
       },
     },
   },
   module: {
-    // 打包规则
     rules: [
       {
         test: /\.jsx?$/,
@@ -92,6 +93,14 @@ module.exports = {
       {
         test: /\.ts$/,
         use: "babel-loader",
+      },
+      {
+        test: /\.css$/,
+        use: [
+          // "style-loader", // 开发环境
+          MiniCssExtractPlugin.loader, // 生产环境
+          "css-loader",
+        ],
       },
     ],
   },
@@ -104,6 +113,11 @@ module.exports = {
       axios: ["axios", "default"],
       // get: ['axios', 'get'],
       dayjs: "dayjs",
+    }),
+    // 完成对css的提取
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+      chunkFilename: "css/[name]_chunk.css",
     }),
   ],
 };

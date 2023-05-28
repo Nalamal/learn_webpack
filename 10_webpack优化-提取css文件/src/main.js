@@ -1,5 +1,6 @@
 import axios from "axios";
 import "./abc";
+import "./css/style.css";
 import { foo } from "./utils/foo";
 // import { bar } from "./utils/bar";
 
